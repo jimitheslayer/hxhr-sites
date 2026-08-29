@@ -3,7 +3,14 @@
   <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Benefits — HarmoniXHR</title>
+  <meta name="description" content="Lower your medical renewal without making the plan worse. See what your spend does next year, and what a leaner premium plus a Section 105 plan leaves you to keep.">
+  <meta property="og:title" content="Medical Benefits: HarmoniXHR">
+  <meta property="og:description" content="Lower your medical renewal without making the plan worse. See what your spend does next year, and what a leaner premium plus a Section 105 plan leaves you to keep.">
+  <meta property="og:image" content="https://benefits.harmonixhr.com/assets/img/share-preview-benefits.jpg">
+  <meta property="og:url" content="https://benefits.harmonixhr.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Medical Benefits: HarmoniXHR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -165,6 +172,7 @@ h1,h2,h3,h4{margin:0;line-height:1.14;letter-spacing:-.025em;font-weight:700;}
     .grid3,.usage-grid,.coverage-grid{grid-template-columns:1fr;}
 }
 @media(max-width:700px){
+  .hero-bg{background-position:78% center;}
   .grid2,.est-row,.qual-grid{grid-template-columns:1fr;}
   .bio{flex-direction:column;align-items:center;text-align:center;}
   .buy-more ul{columns:1;}
@@ -208,7 +216,7 @@ h1,h2,h3,h4{margin:0;line-height:1.14;letter-spacing:-.025em;font-weight:700;}
       <div class="est-row">
         <div class="est-box">
           <label>Current annual spend</label>
-          <div class="money-row"><span class="dollar">$</span><input type="number" id="spend" value="1650000"></div>
+          <div class="money-row"><span class="dollar">$</span><input type="text" inputmode="numeric" id="spend" value="1650000"></div>
             </div>
             <div class="est-box hi">
               <label>Projected next year</label>
@@ -245,12 +253,12 @@ h1,h2,h3,h4{margin:0;line-height:1.14;letter-spacing:-.025em;font-weight:700;}
           </div>
           <div class="illust-body" id="illust-body">
             <div class="grid2">
-              <div class="field"><label>Full-time employees</label><input type="number" id="ft" placeholder="185"></div>
-              <div class="field"><label>Part-time employees</label><input type="number" id="pt" placeholder="25"></div>
+              <div class="field"><label>Full-time employees</label><input type="text" inputmode="numeric" id="ft" placeholder="185"></div>
+              <div class="field"><label>Part-time employees</label><input type="text" inputmode="numeric" id="pt" placeholder="25"></div>
             </div>
             <div class="grid2">
-              <div class="field"><label>Employees covered by the health plan</label><span class="sub">Not everyone enrolls. This is what the coefficients run on.</span><input type="number" id="covEmp" placeholder="150"></div>
-              <div class="field"><label>Approximate total monthly premium</label><span class="sub">What the company pays the carrier each month.</span><span class="dollar-lbl">$</span><input type="number" id="premium" placeholder="137,500"></div>
+              <div class="field"><label>Employees covered by the health plan</label><span class="sub">Not everyone enrolls. This is what the coefficients run on.</span><input type="text" inputmode="numeric" id="covEmp" placeholder="150"></div>
+              <div class="field"><label>Approximate total monthly premium</label><span class="sub">What the company pays the carrier each month.</span><span class="dollar-lbl">$</span><input type="text" inputmode="numeric" id="premium" placeholder="137,500"></div>
             </div>
             <div class="grid3">
               <div class="field"><label>Plan type</label><select id="plantype"><option>HMO</option><option>PPO</option><option>Both offered</option></select></div>
@@ -459,12 +467,34 @@ function usd(n){ return '$' + group(n); }
 function usdK(n){ return '$' + Math.round(n/1000) + 'K'; }
 
 (function(){
+  function digits(s){ return String(s).replace(/[^\d]/g,''); }
+  function comma(d){ return d.replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  ['spend','ft','pt','covEmp','premium'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    function fmt(){
+      var caret = el.selectionStart == null ? el.value.length : el.selectionStart;
+      var kept  = digits(el.value.slice(0, caret)).length;
+      var d = digits(el.value);
+      var v = d ? comma(d) : '';
+      if (v === el.value) return;
+      el.value = v;
+      var pos = 0, seen = 0;
+      while (pos < v.length && seen < kept) { if (/\d/.test(v.charAt(pos))) seen++; pos++; }
+      try { el.setSelectionRange(pos, pos); } catch (err) {}
+    }
+    el.addEventListener('input', fmt);
+    fmt();
+  });
+})();
+
+(function(){
   var pct = 9;
   var spendInput = document.getElementById('spend');
   var projectedEl = document.getElementById('projected');
   var btns = document.querySelectorAll('#pct-toggle button');
   function recalc(){
-        var spend = parseFloat(spendInput.value) || 0;
+        var spend = parseFloat(String(spendInput.value).replace(/,/g,'')) || 0;
     projectedEl.textContent = spend > 0 ? usd(spend * (1 + pct/100)) : 'Enter a figure';
   }
   btns.forEach(function(b){
@@ -492,7 +522,7 @@ function usdK(n){ return '$' + Math.round(n/1000) + 'K'; }
   var CONFIG = { premiumReduction:0.35, adminPEPM:30, livesPerEmployee:1.4,
         utilization:[0.5,0.75,1.0], claimsLoad:[0.30,0.50,0.70], hospRate:0.043 };
   var ids = ['ft','pt','covEmp','premium','ded','copay'];
-  function num(v){ var n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; }
+  function num(v){ var n = parseFloat(String(v).replace(/,/g,'')); return isFinite(n) && n > 0 ? n : 0; }
 
   function recalc(){
         var covEmp  = num(document.getElementById('covEmp').value);
