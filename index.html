@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Benefits — HarmoniXHR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --blue:#0B66F3; --blue-dark:#0A50C0; --navy:#062B5D; --navy-deep:#04203F;
+  --green:#2E7A33; --green-tint:#EFF6EF; --green-line:#CADDCA;
+     --amber:#B45309; --amber-tint:#FEF6EC; --amber-line:#F0D9B8;
+      --ink:#12233D; --ink-mid:#4A5B72; --ink-soft:#6E7F94;
+  --rule:#E2E9F1; --tint:#F5F8FC;
+      --wrap:1160px; --pad:24px;
+  --shadow:0 1px 2px rgba(6,43,93,.06), 0 10px 30px rgba(6,43,93,.08);
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:#fff;line-height:1.62;overflow-x:hidden;}
+h1,h2,h3,h4{margin:0;line-height:1.14;letter-spacing:-.025em;font-weight:700;}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--pad);}
+.sec{padding-block:64px;}
+  a{color:var(--blue);}
+.full-bleed{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--rule);}
+.nav .logo{display:flex;align-items:center;}
+.nav .logo img{height:64px;width:auto;display:block;}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:9px;
+  border:1.5px solid transparent;font-weight:600;font-size:15.5px;cursor:pointer;
+  white-space:nowrap;transition:transform .15s ease,background .15s ease;text-decoration:none;}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 6px 18px rgba(11,102,243,.28);}
+.btn-primary:hover{background:var(--blue-dark);}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 6px 18px rgba(46,122,51,.24);}
+.btn-green:hover{background:#26642A;}
+.btn-outline-green{background:#fff;color:var(--green);border-color:var(--green-line);}
+  .nav .btn{padding:10px 20px;font-size:14.5px;}
+.arw{transition:transform .18s ease;}
+.btn:hover .arw{transform:translateX(4px);}
+
+.hero{position:relative;width:100%;overflow:hidden;color:#fff;padding-block:100px;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f4ce0914f11215f65f4e.jpg');background-size:cover;background-position:center;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,32,63,.96) 0%,rgba(4,32,63,.88) 40%,rgba(4,32,63,.45) 75%,rgba(4,32,63,.2) 100%);}
+.hero .wrap{position:relative;z-index:1;}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--green);margin-bottom:16px;}
+.hero .eyebrow{color:#8FD98F;}
+.hero h1{font-size:clamp(32px,4.6vw,50px);font-weight:800;letter-spacing:-.035em;max-width:760px;margin-bottom:22px;color:#fff;}
+.lede{font-size:clamp(16px,1.35vw,18.5px);color:#D7E4F2;max-width:600px;margin-bottom:14px;}
+.hero .lede{color:#D7E4F2;}
+.sec .lede{color:var(--ink-mid);}
+.btn-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:20px;}
+.hero-note{font-size:13px;color:#9FB4CC;margin-top:16px;max-width:600px;line-height:1.6;}
+
+.sec-head{max-width:680px;margin:0 auto 40px;text-align:center;}
+.sec-head .eyebrow{text-align:center;}
+.sec-head h2{font-size:clamp(26px,3.2vw,36px);}
+.sec-head p{color:var(--ink-mid);font-size:16px;margin-top:12px;line-height:1.6;}
+
+.calc{border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);max-width:640px;margin:0 auto;background:#fff;padding:32px;text-align:center;}
+.calc h2{font-size:26px;margin-bottom:6px;}
+.calc>.sub{color:var(--ink-mid);font-size:14px;margin-bottom:24px;}
+.est-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;text-align:left;}
+.est-box{border:1px solid var(--rule);border-radius:12px;padding:16px 18px;}
+.est-box.hi{background:var(--green-tint);border-color:var(--green-line);}
+.est-box label{display:block;font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.est-box .money-row{display:flex;align-items:baseline;gap:2px;}
+.est-box .money-row span.dollar{font-size:18px;font-weight:700;color:var(--ink-soft);}
+.est-box input{border:none;background:transparent;font-size:22px;font-weight:700;color:var(--ink);width:100%;font-family:var(--sans);padding:0;}
+.est-box input:focus{outline:none;}
+.est-box.hi .money-row{color:var(--green);}
+.est-box.hi .val{font-size:22px;font-weight:700;color:var(--green);}
+.pct-label{font-size:14px;font-weight:600;text-align:left;margin-bottom:10px;}
+.toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+.pct-btn{border:1.5px solid var(--rule) !important;border-radius:10px;padding:11px;background:#fff !important;font-weight:700;font-size:14.5px;color:var(--ink) !important;cursor:pointer;font-family:var(--sans);}
+.pct-btn[aria-pressed="true"]{border-color:var(--green) !important;background:var(--green-tint) !important;color:var(--green) !important;}
+.trend-note{font-size:12.5px;color:var(--ink-soft);text-align:left;margin-bottom:20px;line-height:1.5;}
+.calc-cta{width:100%;justify-content:center;}
+.nothing-sent{font-size:12.5px;color:var(--green);margin-top:14px;font-weight:600;}
+
+.illust-shell{border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);background:#fff;overflow:hidden;}
+.illust-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 30px;}
+.illust-summary h3{font-size:19px;margin-bottom:4px;}
+.illust-summary p{margin:0;color:var(--ink-mid);font-size:14px;}
+.illust-body{border-top:1px solid var(--rule);padding:28px 30px;display:none;}
+.illust-body.open{display:block;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px;}
+.field label{display:block;font-weight:600;font-size:14px;margin-bottom:4px;}
+.field .sub{display:block;font-size:12px;color:var(--ink-soft);font-weight:400;margin-bottom:8px;}
+.field input,.field select{width:100%;padding:11px 12px;border:1px solid var(--rule);border-radius:9px;background:#fff;font-size:15px;font-family:var(--sans);}
+.field .dollar-lbl{font-weight:700;font-size:14px;display:block;margin-bottom:6px;}
+.field input:focus,.field select:focus{outline:2px solid var(--blue);outline-offset:1px;}
+
+.wf-row{display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px;border-radius:11px;background:var(--tint);margin-bottom:10px;}
+.wf-row .lbl{font-size:15.5px;font-weight:700;}
+.wf-row .sub{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:400;margin-top:2px;}
+.wf-row .val{font-size:19px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;}
+.wf-row.pool{background:var(--green-tint);}
+.wf-row.pool .val{color:var(--green);}
+.hint-box{background:var(--tint);border-radius:10px;padding:14px 20px;font-size:13.5px;color:var(--ink-soft);margin-bottom:24px;}
+
+.usage-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
+.usage-card{border:1px solid var(--rule);border-radius:13px;padding:22px;}
+.usage-card.worst{background:var(--amber-tint);border-color:var(--amber-line);}
+.usage-card .u-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);}
+.usage-card .u-sub{font-size:13.5px;color:var(--ink-mid);margin:2px 0 16px;}
+.usage-stat{display:flex;justify-content:space-between;font-size:13.5px;color:var(--ink-mid);margin-bottom:8px;}
+.usage-stat b{color:var(--ink);font-weight:700;}
+.usage-card hr{border:none;border-top:1px solid rgba(0,0,0,.08);margin:14px 0;}
+.usage-card .keep-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green);}
+.usage-card.worst .keep-lbl{color:var(--amber);}
+.usage-card .keep-val{font-size:26px;font-weight:800;color:var(--green);margin:4px 0;}
+.usage-card.worst .keep-val{color:var(--amber);}
+.usage-card .keep-pct{font-size:12.5px;color:var(--ink-soft);}
+.range-note{font-size:14px;color:var(--ink-mid);line-height:1.6;background:var(--tint);border-radius:10px;padding:16px 20px;}
+
+.coverage-callout{background:var(--green);color:#fff;border-radius:14px;padding:28px 30px;margin:26px 0;}
+.coverage-callout h3{font-size:19px;color:#fff;margin-bottom:8px;}
+.coverage-callout p{margin:0;color:#DDEEDF;font-size:14.5px;line-height:1.55;}
+.coverage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.cov-item{border:1px solid var(--rule);border-radius:10px;padding:14px 16px;font-size:13.5px;font-weight:600;color:var(--ink);}
+
+.buy-more{border:1px solid var(--rule);border-radius:13px;padding:24px 26px;margin-top:26px;}
+.buy-more h3{font-size:18px;margin-bottom:8px;}
+.buy-more p{color:var(--ink-mid);font-size:14px;margin-bottom:14px;}
+.buy-more ul{margin:0;padding-left:20px;columns:2;}
+.buy-more li{font-size:14px;color:var(--ink);margin-bottom:6px;}
+
+.employee{background:var(--green-tint);border-block:1px solid var(--green-line);}
+.qual-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.qcard{border-radius:13px;padding:26px;border:1px solid var(--rule);}
+.qcard.yes{background:var(--green-tint);border-color:var(--green-line);}
+.qcard.no{background:var(--tint);}
+.qcard h3{font-size:18px;margin-bottom:14px;}
+.qcard.yes h3{color:var(--green);}
+.qcard ul{padding-left:18px;margin:0;}
+.qcard li{margin-bottom:10px;font-size:14px;color:var(--ink);line-height:1.55;}
+
+.evid{background:var(--tint);border-block:1px solid var(--rule);}
+
+.bio{display:flex;gap:40px;align-items:flex-start;border:1px solid var(--rule);border-radius:15px;background:#fff;padding:32px;box-shadow:var(--shadow);}
+.bio img{width:170px;height:255px;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:var(--shadow);}
+.bio h3{font-size:22px;margin-bottom:4px;}
+.bio .role{color:var(--green);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px;}
+.bio p{color:var(--ink-mid);font-size:15px;line-height:1.6;}
+.bio ul{padding-left:18px;}
+.bio li{font-size:14px;color:var(--ink-mid);margin-bottom:8px;}
+
+.carriers{display:flex;flex-wrap:wrap;gap:36px;align-items:center;justify-content:center;padding:30px 0;}
+.carriers img{max-height:38px;max-width:140px;object-fit:contain;filter:grayscale(20%);}
+.fine-print{font-size:12px;color:var(--ink-soft);text-align:center;max-width:700px;margin:20px auto 0;line-height:1.6;}
+
+.buys{background:var(--navy-deep);color:#fff;padding-block:56px;}
+.buys .sec-head h2{color:#fff;}
+  .buys .sec-head p{color:#B6CFEC;}
+  .site-footer{background:var(--navy-deep);color:#8AA8C9;padding-block:34px;text-align:center;font-size:13px;border-top:1px solid rgba(255,255,255,.10);}
+.site-footer strong{color:#C3D8EF;}
+
+  @media(max-width:900px){
+    .grid3,.usage-grid,.coverage-grid{grid-template-columns:1fr;}
+}
+@media(max-width:700px){
+  .grid2,.est-row,.qual-grid{grid-template-columns:1fr;}
+  .bio{flex-direction:column;align-items:center;text-align:center;}
+  .buy-more ul{columns:1;}
+  :root{--pad:18px;}
+    }
+</style>
+    </head>
+    <body>
+
+    <div class="full-bleed">
+    <div class="wrap">
+      <div class="nav">
+        <div class="logo"><img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a920c34722007d7ff16315d.png" alt="HarmoniXHR"></div>
+        <a href="#estimate" class="btn btn-primary">Talk to us</a>
+      </div>
+    </div>
+    </div>
+
+    <div class="hero full-bleed">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="wrap">
+        <div class="eyebrow">Medical Benefits</div>
+        <h1>Your renewal is coming. You do not have to make the plan worse.</h1>
+    <p class="lede">Most employers absorb the increase by raising deductibles and copays. There is another route. Lower the fixed premium you pay the carrier, then use the difference to cover employee medical costs directly. Same carrier, same network, same doctors.</p>
+        <div class="btn-row">
+          <a href="#estimate" class="btn btn-green">See what could be saved <span class="arw">→</span></a>
+          <a href="#worksheet" class="btn btn-primary" style="background:transparent;border-color:#fff;box-shadow:none;">Run the illustration</a>
+        </div>
+        <p class="hero-note">No contact details required to see a figure. If your plan is already too lean for this to help, the tool says so rather than inventing a number.</p>
+  </div>
+</div>
+
+<div class="sec full-bleed" id="estimate">
+  <div class="wrap">
+    <div class="calc">
+      <h2>Start with the number you already know</h2>
+      <p class="sub">What your company pays for employee medical coverage today.</p>
+      <div class="est-row">
+        <div class="est-box">
+          <label>Current annual spend</label>
+          <div class="money-row"><span class="dollar">$</span><input type="number" id="spend" value="1650000"></div>
+            </div>
+            <div class="est-box hi">
+              <label>Projected next year</label>
+          <div class="val" id="projected">Enter a figure</div>
+        </div>
+      </div>
+      <div class="pct-label">Expected renewal increase</div>
+      <div class="toggle" id="pct-toggle">
+        <button type="button" data-pct="5">5%</button>
+            <button type="button" data-pct="9" aria-pressed="true">9%</button>
+            <button type="button" data-pct="13">13%</button>
+          </div>
+          <p class="trend-note">2026 medical trend runs 8.5 to 9.5 percent before employers cut benefits to offset it.</p>
+          <a href="#worksheet" class="btn btn-green calc-cta">Then see what could be saved</a>
+          <p class="nothing-sent">Nothing is sent anywhere.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec employee full-bleed" id="worksheet">
+      <div class="wrap">
+        <div class="eyebrow">The illustration</div>
+        <div class="sec-head" style="text-align:left;margin:0 0 30px;">
+          <h2 style="text-align:left;">What survives once claims are paid</h2>
+          <p style="text-align:left;">Anyone can show you a lower premium. The question that matters is what is left after your people actually use the plan. Add your details and this runs the same structure used to build a real proposal.</p>
+    </div>
+    <div class="illust-shell">
+      <div class="illust-summary">
+        <div>
+          <h3>Full illustration</h3>
+          <p>Ten fields, about two minutes. Nothing is submitted and no contact details are required.</p>
+        </div>
+        <button type="button" class="btn btn-outline-green" id="illust-toggle" style="flex-shrink:0;">Add your details</button>
+          </div>
+          <div class="illust-body" id="illust-body">
+            <div class="grid2">
+              <div class="field"><label>Full-time employees</label><input type="number" id="ft" placeholder="185"></div>
+              <div class="field"><label>Part-time employees</label><input type="number" id="pt" placeholder="25"></div>
+            </div>
+            <div class="grid2">
+              <div class="field"><label>Employees covered by the health plan</label><span class="sub">Not everyone enrolls. This is what the coefficients run on.</span><input type="number" id="covEmp" placeholder="150"></div>
+              <div class="field"><label>Approximate total monthly premium</label><span class="sub">What the company pays the carrier each month.</span><span class="dollar-lbl">$</span><input type="number" id="premium" placeholder="137,500"></div>
+            </div>
+            <div class="grid3">
+              <div class="field"><label>Plan type</label><select id="plantype"><option>HMO</option><option>PPO</option><option>Both offered</option></select></div>
+              <div class="field"><label>Plan level</label><select id="planlevel"><option>Platinum</option><option selected>Gold</option><option>Silver</option><option>Not sure</option></select></div>
+              <div class="field"><label>Renewal anniversary month</label>
+            <select id="month"><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+          </div>
+        </div>
+            <div class="grid2">
+              <div class="field"><label>Current deductible</label><span class="sub">The single biggest factor in whether this works for you.</span>
+                <select id="ded">
+                  <option value="0.25">Under $500</option>
+                  <option value="0.20" selected>$500 to $1,500</option>
+                  <option value="0.12">$1,500 to $3,000</option>
+                  <option value="0.05">Over $3,000</option>
+                </select>
+              </div>
+              <div class="field"><label>Doctor visit copay</label><span class="sub">What an employee pays to see a doctor today.</span>
+            <select id="copay">
+              <option value="low" selected>Nothing or small</option>
+              <option value="mid">Around $30 to $50</option>
+                  <option value="high">Full cost until deductible</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="wf-row"><div><div class="lbl">Projected renewal</div><span class="sub">What you pay next year if nothing changes</span></div><div class="val" id="out-renewal">$0</div></div>
+        <div class="wf-row"><div><div class="lbl">Lower fixed premium</div><span class="sub">Reduced plan design, same carrier and network</span></div><div class="val" id="out-lower">$0</div></div>
+            <div class="wf-row"><div><div class="lbl">Plan administration</div><span class="sub" id="admin-sub">$30 per covered employee per month</span></div><div class="val" id="out-admin">$0</div></div>
+        <div class="wf-row pool"><div><div class="lbl">Available to pay claims</div><span class="sub">Money your company controls, not the carrier</span></div><div class="val" id="out-pool">$0</div></div>
+        <div class="hint-box" id="hint-box">Add your figures above to see the range.</div>
+
+            <div class="usage-grid">
+              <div class="usage-card">
+                <div class="u-eyebrow">Expected use</div>
+                <div class="u-sub">Half file a claim</div>
+                <div class="usage-stat"><span>Filing a claim</span><b id="u1-filing">0</b></div>
+            <div class="usage-stat"><span>Hospitalizations</span><b id="u1-hosp">0</b></div>
+            <div class="usage-stat"><span>Claims paid</span><b id="u1-paid">$0</b></div>
+            <hr><div class="keep-lbl">You keep</div><div class="keep-val" id="u1-keep">$0</div><div class="keep-pct" id="u1-pct">0% of projected renewal cost</div>
+              </div>
+              <div class="usage-card">
+                <div class="u-eyebrow">Higher use</div>
+                <div class="u-sub">Three quarters file</div>
+            <div class="usage-stat"><span>Filing a claim</span><b id="u2-filing">0</b></div>
+            <div class="usage-stat"><span>Hospitalizations</span><b id="u2-hosp">0</b></div>
+                <div class="usage-stat"><span>Claims paid</span><b id="u2-paid">$0</b></div>
+                <hr><div class="keep-lbl">You keep</div><div class="keep-val" id="u2-keep">$0</div><div class="keep-pct" id="u2-pct">0% of projected renewal cost</div>
+              </div>
+              <div class="usage-card worst">
+                <div class="u-eyebrow">Everyone uses it</div>
+            <div class="u-sub">All covered lives file</div>
+                <div class="usage-stat"><span>Filing a claim</span><b id="u3-filing">0</b></div>
+            <div class="usage-stat"><span>Hospitalizations</span><b id="u3-hosp">0</b></div>
+            <div class="usage-stat"><span>Claims paid</span><b id="u3-paid">$0</b></div>
+            <hr><div class="keep-lbl">You keep</div><div class="keep-val" id="u3-keep">$0</div><div class="keep-pct" id="u3-pct">0% of projected renewal cost</div>
+              </div>
+            </div>
+            <p class="range-note" id="range-note">Add your figures above to see the range.</p>
+
+            <div class="coverage-callout">
+              <h3>Your employees end up with 100 percent coverage, no deductible and no copays.</h3>
+              <p>That is the point of the structure. The premium falls, a Section 105 plan covers what the leaner design no longer does, and the plan experience your people actually have is the same or better than before.</p>
+        </div>
+        <div class="coverage-grid">
+          <div class="cov-item">$0 plan deductible</div>
+          <div class="cov-item">$0 doctor visit copay</div>
+          <div class="cov-item">100% X-ray and lab</div>
+          <div class="cov-item">$0 hospital and surgery</div>
+          <div class="cov-item">$0 generic and brand RX</div>
+          <div class="cov-item">100% preventive care</div>
+          <div class="cov-item">Low ER and ambulance copay</div>
+              <div class="cov-item">$1,000 individual out-of-pocket max</div>
+            </div>
+
+            <div class="buy-more">
+              <h3>And the money you keep can buy more</h3>
+              <p>What the pool does not spend is yours. Many employers put some of it straight back into the benefits package, which is how a cost reduction becomes a recruiting advantage rather than just a saving.</p>
+          <ul>
+            <li>Vision</li>
+            <li>Dental</li>
+            <li>Hearing</li>
+            <li>Mental health</li>
+          </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec full-bleed">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>This depends on your plan, not your headcount</h2>
+      <p>The saving comes from the gap between the plan you buy now and a leaner design. If that gap is small, so is the opportunity.</p>
+        </div>
+        <div class="qual-grid">
+          <div class="qcard yes">
+            <h3>Worth a look</h3>
+        <ul>
+          <li>A genuinely good plan today, typically under a $500 deductible with low or no copays</li>
+              <li>Spending above roughly $9,000 to $10,000 per covered employee per year</li>
+          <li>Competing for staff, so cutting the plan is not an acceptable answer</li>
+          <li>A renewal inside the next twelve months</li>
+        </ul>
+      </div>
+      <div class="qcard no">
+            <h3>Probably not</h3>
+            <ul>
+              <li>Already on a high deductible plan, since the premium has little left to give</li>
+              <li>Deductibles above roughly $3,000, where the restructuring has largely happened</li>
+              <li>Very small headcount, where fixed administration outweighs the saving</li>
+              <li>A renewal that has just passed, since the next window is a year out</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec full-bleed">
+      <div class="wrap">
+        <div class="sec-head"><h2>A person, not a software output</h2></div>
+        <div class="bio">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f3120914f11215f63a72.jpg" alt="Clifford Der">
+          <div>
+            <h3>Clifford Der</h3>
+            <div class="role">Chief of Corporate Benefits · CA License #0474385</div>
+            <p>Five decades in employee benefits, and a member of the National Association of Health Underwriters for over fifty years. Clifford has spent that career building alternative funding structures for employers, and holds a Bachelor of Science in Electrical Engineering.</p>
+        <p>He enrolled more than 5,000 employees for Lifeguard HMO, and his work has repeatedly been first of its kind:</p>
+            <ul>
+              <li>Developed the Chinese Community Health Plan</li>
+              <li>Developed the first Exclusive Provider Option</li>
+              <li>Developed the first stand-alone fully insured acupuncture plan</li>
+          <li>First Lifeguard HMO sales representative to Asian employers</li>
+              <li>An early architect of Medical Expense Reimbursement Plans, the structure described on this page</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="sec evid full-bleed">
+      <div class="wrap">
+        <div class="sec-head"><h2>Administrators and carriers worked with</h2></div>
+    <div class="carriers">
+      <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f311934a62aec86c00f5.jpg" alt="Meritain Health">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f3114fe741935436fffb.jpg" alt="BRMS and East West Administrators">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f311854f9696b3bed606.jpg" alt="Kaiser Permanente">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f3114fe741935436ffff.jpg" alt="UnitedHealthcare">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f31148ca8386eb04667b.jpg" alt="Anthem Blue Cross Blue Shield">
+          <img src="https://assets.cdn.filesafe.space/x48r2jr2UDphtVIF0xua/media/6a91f3110914f11215f63a44.jpg" alt="Cigna">
+        </div>
+        <p class="fine-print">All third party names and marks shown are the property of their respective owners. Their appearance identifies carrier and administrator appointments held by Clifford Der as a licensed producer, CA License #0474385, and does not imply any endorsement, sponsorship or affiliation.</p>
+  </div>
+</div>
+
+<div class="sec full-bleed" id="analysis">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Request a detailed analysis</h2>
+          <p>Share your numbers and Clifford will review them personally. This is a request for an illustration, not a quotation or an offer of coverage.</p>
+        </div>
+        <div style="max-width:640px;margin:0 auto;">
+          <iframe
+            src="https://api.leadconnectorhq.com/widget/form/Jq9AT1WZ9PL55gDz5UOe"
+            style="width:100%;border:none;border-radius:16px;box-shadow:0 1px 2px rgba(6,43,93,.06), 0 10px 30px rgba(6,43,93,.08);"
+            id="inline-Jq9AT1WZ9PL55gDz5UOe"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="GHHS Benefits Savings Analysis"
+            data-height="600"
+            data-layout-iframe-id="inline-Jq9AT1WZ9PL55gDz5UOe"
+            data-form-id="Jq9AT1WZ9PL55gDz5UOe"
+            title="GHHS Benefits Savings Analysis">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="buys full-bleed">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Two numbers to start, ten to be sure</h2>
+          <p>Your current spend and expected increase gives a projection in seconds. The full illustration takes about two minutes and tells you plainly if the answer is weak.</p>
+    </div>
+    <div class="btn-row" style="justify-content:center;">
+      <a href="#estimate" class="btn btn-green">Run the illustration <span class="arw">→</span></a>
+          <a href="#analysis" class="btn btn-primary" style="background:transparent;border-color:#fff;box-shadow:none;">Request a detailed analysis</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer full-bleed">
+      <p>Figures shown on this site are structured approximations for comparison and education. They are not carrier quotes, guarantees, actuarial opinions or benefit proposals.</p>
+      <p><strong>&copy; 2026 HarmoniXHR.</strong> All rights reserved.</p>
+</div>
+
+<script>
+function group(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function usd(n){ return '$' + group(n); }
+function usdK(n){ return '$' + Math.round(n/1000) + 'K'; }
+
+(function(){
+  var pct = 9;
+  var spendInput = document.getElementById('spend');
+  var projectedEl = document.getElementById('projected');
+  var btns = document.querySelectorAll('#pct-toggle button');
+  function recalc(){
+        var spend = parseFloat(spendInput.value) || 0;
+    projectedEl.textContent = spend > 0 ? usd(spend * (1 + pct/100)) : 'Enter a figure';
+  }
+  btns.forEach(function(b){
+        b.addEventListener('click', function(){
+                btns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      pct = parseFloat(b.getAttribute('data-pct'));
+      recalc();
+        });
+  });
+  spendInput.addEventListener('input', recalc);
+  recalc();
+})();
+
+(function(){
+  var toggleBtn = document.getElementById('illust-toggle');
+  var body = document.getElementById('illust-body');
+  toggleBtn.addEventListener('click', function(){
+        var isOpen = body.classList.toggle('open');
+    toggleBtn.textContent = isOpen ? 'Hide the details' : 'Add your details';
+  });
+})();
+
+(function(){
+  var CONFIG = { premiumReduction:0.35, adminPEPM:30, livesPerEmployee:1.4,
+        utilization:[0.5,0.75,1.0], claimsLoad:[0.30,0.50,0.70], hospRate:0.043 };
+  var ids = ['ft','pt','covEmp','premium','ded','copay'];
+  function num(v){ var n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; }
+
+  function recalc(){
+        var covEmp  = num(document.getElementById('covEmp').value);
+    var monthly = num(document.getElementById('premium').value);
+    var spend   = monthly * 12;
+
+    var incPct  = 0.09;
+    var renewal = spend * (1 + incPct);
+    var premium = renewal * (1 - CONFIG.premiumReduction);
+    var admin   = covEmp * CONFIG.adminPEPM * 12;
+    var pool    = Math.max(0, renewal - premium - admin);
+
+    document.getElementById('out-renewal').textContent = usd(renewal);
+    document.getElementById('out-lower').textContent = usd(premium);
+    document.getElementById('out-admin').textContent = usd(admin);
+    document.getElementById('out-pool').textContent = usd(pool);
+    document.getElementById('admin-sub').textContent = covEmp > 0
+            ? '$30 per covered employee per month, ' + Math.round(covEmp) + ' employees'
+            : '$30 per covered employee per month';
+
+    var hasData = covEmp > 0 && monthly > 0;
+    var hintBox = document.getElementById('hint-box');
+    var rangeNote = document.getElementById('range-note');
+
+    if (hasData) {
+      hintBox.style.display = 'none';
+      var lives = Math.round(covEmp * CONFIG.livesPerEmployee);
+      var labels = ['u1','u2','u3'];
+      var keeps = [];
+      labels.forEach(function(prefix, i){
+                var filing = Math.round(lives * CONFIG.utilization[i]);
+        var hosp = Math.round(filing * CONFIG.hospRate);
+        var paid = pool * CONFIG.claimsLoad[i];
+        var keep = pool - paid;
+        var pctOfRenewal = renewal > 0 ? (keep / renewal * 100) : 0;
+        keeps.push(keep);
+        document.getElementById(prefix+'-filing').textContent = filing;
+        document.getElementById(prefix+'-hosp').textContent = hosp;
+        document.getElementById(prefix+'-paid').textContent = usdK(paid);
+        document.getElementById(prefix+'-keep').textContent = usd(keep);
+        document.getElementById(prefix+'-pct').textContent = pctOfRenewal.toFixed(1) + '% of projected renewal cost';
+      });
+      var lo = Math.min.apply(null, keeps);
+      var hi = Math.max.apply(null, keeps);
+      var loPct = renewal > 0 ? (lo/renewal*100) : 0;
+      var hiPct = renewal > 0 ? (hi/renewal*100) : 0;
+      rangeNote.innerHTML = 'Across all three levels of usage this employer keeps between <b>' + usd(lo) + '</b> and <b>' + usd(hi) + '</b> a year, or <b>' + loPct.toFixed(1) + '% to ' + hiPct.toFixed(1) + '%</b> of projected renewal cost.';
+    } else {
+      hintBox.style.display = 'block';
+      rangeNote.textContent = 'Add your figures above to see the range.';
+    }
+  }
+
+  ids.forEach(function(id){
+        var el = document.getElementById(id);
+    el.addEventListener('input', recalc);
+    el.addEventListener('change', recalc);
+  });
+  recalc();
+  })();
+</script>
+
+  </body>
+  </html>
+  
