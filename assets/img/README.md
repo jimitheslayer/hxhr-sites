@@ -33,6 +33,49 @@ The original is retained because the derivative is lossy in resolution and
 cannot be enlarged back. Anything needing print resolution or a different
 served size should be generated from `logo-original.png`, not from `logo.png`.
 
+## The two white logo masters
+
+`logo-hxhr-white.png` and `logo-ghhs-white.png` are brand masters, not page
+assets. Nothing in index.html references either one. They are here for two
+reasons.
+
+First, they are the source for the share image. `src/share/benefits.html`
+composes them onto a dark navy panel and is rasterised to
+`share-preview-benefits.jpg`. Rebuilding that image, or building one for a
+future vertical, needs these files present in the repo; a build that depends
+on artwork sitting on someone's Desktop is a build that breaks silently.
+
+Second, and more importantly, `logo-hxhr-white.png` had no backup of any kind
+before it was copied here. It came from
+`~/Desktop/HXHR/HarmoniXHR/HXHR logo white.png`, which is outside
+/Volumes/Thinker and therefore outside the rsync mirror, and the machine has
+no Time Machine destination configured and no scheduled backup job. It was a
+single copy on a single disk. Committing it to a remote repository is
+currently the only redundancy it has.
+
+| File | Size | Ink bbox | Transparent | Artwork colour | Source |
+|---|---|---|---|---|---|
+| logo-hxhr-white.png | 4889x1602 | 4666x1376 | 88.8% | #EFF0F1 white | ~/Desktop/HXHR/HarmoniXHR/HXHR logo white.png |
+| logo-ghhs-white.png | 6199x1376 | 6199x1376 | 84.1% | #FFFFFF white | produced off this machine from a 6685x1659 RGBA source |
+
+Both are white artwork on transparency, confirmed by inspecting the alpha
+channel rather than by average colour: a white background and white artwork
+average the same and only the alpha distinguishes them.
+
+Two notes for anyone placing them together. Their pixel heights are not
+comparable: the HXHR file carries 106px of transparent padding above the
+artwork and 120px below, while the GHHS file has none. Matching pixel heights
+makes HXHR look smaller than it is. Matching the dense-ink bands instead, 34.0%
+of file height for HXHR against 46.9% for GHHS, gives a ratio of about 1.38.
+The share image uses 68px and 49px on that basis. Second, the GHHS mark
+includes a HUMAN HEALTH SOLUTIONS line beneath the wordmark which disappears
+below roughly 40px rendered height, so it should not be set small.
+
+The GHHS source at 6685x1659 is not present on this machine. Only a 565x144
+JPEG of the GHHS logo exists locally, on a solid white background with no alpha,
+which is unusable on a dark panel. If the white master is ever lost, it cannot
+be regenerated from anything in this repository or on the Thinker drive.
+
 ## Mapping, local filename to original CDN filename
 
 All CDN paths were under:
@@ -68,4 +111,4 @@ producer and do not imply endorsement, sponsorship or affiliation. Relocating
 the files does not change that. They remain the property of their respective
 owners.
 
-Last updated: 2026-08-28
+Last updated: 2026-08-29
